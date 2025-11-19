@@ -24,6 +24,8 @@ The simulation data reveals a crucial **"Zero-Error Window"** that defines a sig
 
 The simulation for the Bio-Adaptive Decoder utilizes a **Heuristic Efficiency Model** to rapidly visualize target performance.
 
+**Latency & Performance:** A critical benchmark shows the current Python prototype operates at $\approx 850 \mu s$, which is $\approx 150\times$ slower than the $\approx 5.6 \mu s$ required for real-time decoding. This latency gap confirms the necessity of **Phase 2 (C++/CUDA Re-engineering)** to move from prototype validation to high-speed hardware implementation.
+
 1.  **Standard Baseline:** The `mwpm_data` curve is generated using a standard, validated Monte Carlo simulation of the Surface Code's logical error rate, which serves as a realistic performance benchmark.
 2.  **Bio-Adaptive Model:** The `bio_data` curve implements a heuristic model that simulates the *behavior* of the proposed bio-inspired mechanism (e.g., a **95% effective suppression rule** for low-weight error chains).
 
