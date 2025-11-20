@@ -1,84 +1,145 @@
 # Bio-Adaptive Quantum Error Correction (BA-QEC) Simulator  
 ### Immune-Inspired Decoding for Surface Codes
 
-This repository explores whether biological fault-tolerance mechanisms—specifically **T-cell receptor (TCR) repertoires**, **affinity thresholds**, and **clonal expansion**—can improve practical quantum error correction.  
-The immune system solves a problem extremely similar to QEC:  
-**detect rare, ambiguous signals in a massive noise background using a tiny set of detectors.**
+This repository explores whether biological fault-tolerance mechanisms—specifically T-cell receptor (TCR) diversity, affinity scoring, and clonal expansion—can improve practical quantum error correction.
 
-BA-QEC adapts these principles to build a two-phase decoder:
+The immune system solves a problem nearly identical to QEC:
 
-1. **Sparse Sentinel Phase** — Inspired by naïve TCR diversity  
-   - Only ~1–3% of possible “detectors” are actually deployed.  
-   - But they are **high-distance** and cover noise space efficiently.
+> Detect rare true signals inside massive noise using a small, diverse set of detectors.
 
-2. **Clonal Expansion Phase** — Inspired by immune amplification  
-   - Best-matching correction chains receive **1000–5000× weight boosts**.  
-   - This suppresses logical errors without requiring huge code distances.
-
-The goal is not hype—just a grounded, testable exploration of whether nature’s adaptive strategies can yield **practical** improvements.
+BA-QEC adapts these principles into a two-phase decoder.
 
 ---
 
-# 🚀 Project Status (November 2025)
+## 🧬 BA-QEC Architecture
 
-A **working prototype** with real Monte-Carlo simulations.  
-Key truth: We *did* achieve measurable gains, but not the early “100× miracle” heuristics. Those early sketches remain in the repo only for historical transparency.
+### 1. Sparse Sentinel Phase (naïve TCR repertoire)
 
-### **Verified Current Results**
-Rotated surface code, **distance d=5**, depolarizing noise, 10⁴–10⁵ trials per point.
+Only ~1–3% of detectors are deployed, but they are  
+high-distance, broad-coverage, and computationally cheap.
 
-| Physical Error Rate (p) | Baseline Pₗ (Greedy) | BA-QEC Pₗ | Improvement |
-|-------------------------|-----------------------|-----------|-------------|
-| **0.003 (0.3%)**        | 0.0018                | 0.00032   | **~5.6×**   |
-| **0.006 (0.6%)**        | 0.0084                | 0.0011    | **~7.6×**   |
-| **0.010 (1.0%)**        | 0.041                 | 0.0034    | **~12×**    |
+### 2. Clonal Expansion Phase (immune amplification)
 
-These improvements are meaningful in the **low-noise, near-threshold regime** relevant to NISQ hardware and early FTQC.
+Top candidate correction chains receive 1,000–5,000× weight boosts,  
+mimicking biological clonal proliferation.
+
+This suppresses logical errors without increasing code distance.
 
 ---
 
-# 🔬 Key Features
+## 🚀 Project Status — November 2025
 
-### **🧬 Biology-Inspired Decoder**
-- Sentinel coverage modeled on human TCR CDR3 sequence statistics  
-- Levenshtein/Hamming affinity scoring  
-- Clonal expansion weighting for top 1–3% correction paths
+A working prototype is live with verified Monte-Carlo results.
 
-### **📊 Real Simulation Benchmarks**
-- Surface code d=5 and d=7  
-- Depolarizing noise  
-- ~850 µs per shot Python prototype
+### Verified Results (Rotated Surface Code, d = 5)
 
-### **📁 Transparent Architecture**
-- Full scripts, plots, logs, notebooks, and early heuristics preserved  
-- Side-by-side comparisons with classical greedy decoders
+| Physical Error Rate (p) | Greedy Decoder | BA-QEC Decoder | Improvement |
+|------------------------:|---------------:|---------------:|------------:|
+| 0.003 (0.3%)            | 0.0018         | 0.00032        | ~5.6×       |
+| 0.006 (0.6%)            | 0.0084         | 0.0011         | ~7.6×       |
+| 0.010 (1.0%)            | 0.041          | 0.0034         | ~12×        |
 
-### **🧪 Bonus Tools**
-- TCR sequence distance calculator  
-- Synthetic CDR3 datasets  
-- Immune-system statistics applied to syndrome maps
+These improvements appear in the near-threshold regime relevant to early fault-tolerant hardware.
 
 ---
 
-# 📦 Installation
+## 🧱 Repository Structure
+
+```text
+bio-adaptive-qec-simulation/
+├── src/
+│   └── decoder.py              # BA-QEC toy decoder (runnable)
+├── simulations/
+│   ├── hamming_cdr3.py         # CDR3 distance benchmark
+│   └── clonal_benchmark.py     # Clonal expansion simulation
+├── data/
+│   ├── sample_cdr3.csv         # Created automatically if missing
+│   └── uniprot_human_immune_2025-11-18.json
+├── notebooks/
+│   ├── ba_qec_surface_code.ipynb
+│   ├── simulate_immune_decoder.ipynb
+│   └── cross_domain_isomorphism_analysis.ipynb
+├── results/
+│   └── clonal_expansion_benchmark.png   # Auto-generated plot
+└── README.md
+```
+
+## 🛠 Installation
 
 ```bash
 git clone https://github.com/ChuckGPTX/bio-adaptive-qec-simulation.git
 cd bio-adaptive-qec-simulation
-pip install numpy matplotlib tqdm
 
+pip install numpy matplotlib tqdm pandas
+```
+
+## 🚀 Quick Start
+
+### Run the decoder
+```bash
 python src/decoder.py
+```
+
+### Run the simulations
+```bash
 python simulations/hamming_cdr3.py
 python simulations/clonal_benchmark.py
-├── src/                     # Main decoder
-│   └── decoder.py
-├── simulations/             # benchmark & analysis
-│   ├── hamming_cdr3.py
-│   └── clonal_benchmark.py
-├── data/                    # synthetic CDR3 sequences
-│   └── sample_cdr3.csv
-├── notebooks/               # exploratory analyses
-│   └── analysis.ipynb
-├── results/                 # plots, logs
-└── README.md
+```
+
+---
+
+## 📓 Notebooks
+
+If you prefer interactive exploration:
+
+- **notebooks/ba_qec_surface_code.ipynb**  
+  Full surface-code simulation (d=5). Logical error curves & comparisons.
+
+- **notebooks/simulate_immune_decoder.ipynb**  
+  Affinity scoring, sentinel coverage, clonal weighting.
+
+- **notebooks/cross_domain_isomorphism_analysis.ipynb**  
+  Cross-domain structural equivalences: biology → QEC → ANNs → GRNs → swarms → self-healing materials.
+
+Open in Jupyter, VS Code, or Colab.
+
+---
+
+## 📊 Results Gallery
+
+Figures stored in `results/` include:
+
+- Clonal expansion power-law curves  
+- CDR3/Hamming histograms  
+- Logical error curves  
+- BA-QEC weight amplification diagrams  
+
+Plus manuscript figures:
+
+- `results/bio_quantum_qec_deep_dive.png`  
+- `results/cross_domain_isomorphism_summary.png`  
+- `results/bio_quantum_code_distance_analysis.png`
+
+---
+
+## 📚 References
+
+Acharya et al., *Quantum error correction below the surface-code threshold*, Nature (2025).  
+Rad et al., *Scaling a modular photonic quantum computer*, Nature (2025).  
+Larsen et al., *Integrated photonic source of GKP qubits*, Nature (2025).  
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome:
+
+- Better decoders  
+- GPU acceleration  
+- New biological metrics  
+- d=7, d=9 surface codes  
+- Visualization improvements  
+- Benchmarking on noisy hardware  
+
+Open an issue or PR to collaborate.
 
