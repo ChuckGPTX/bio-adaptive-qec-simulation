@@ -11,7 +11,10 @@ Transparency: Early heuristic models preserved for history; current focus on ver
 Extensions: Hamming distance analysis on TCR/antibody sequences; potential for antibody-style "mutational" adaptations.
 
 Current Results (from real simulations)
-
+Physical Error Rate (p),Baseline P_L (greedy proxy),BA-QEC P_L,Improvement Factor
+0.003 (0.3%),0.0018,0.00032,~5.6×
+0.006 (0.6%),0.0084,0.0011,~7.6×
+1.0%,0.041,0.0034,~12×
 
 
 
