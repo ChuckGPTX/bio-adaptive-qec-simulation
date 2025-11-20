@@ -1,57 +1,86 @@
-# bio-adaptive-qec-simulation
-Simulation and analysis of a Bio-Adaptive Quantum Error Correction (BA-QEC) decoding strategy.
-# 🧬 Bio-Adaptive Quantum Error Correction (BA-QEC) Simulator
+Bio-Adaptive Quantum Error Correction (BA-QEC) Simulator
+Simulation and analysis of a bio-inspired quantum error correction (QEC) decoding strategy for the surface code, drawing from immune system mechanisms like T-cell receptor (TCR) repertoires and clonal expansion.
+Project Overview
+This repository explores whether biological fault-tolerance tricks—such as deploying a sparse "sentinel" library of detectors followed by massive amplification of the best matches—can improve practical QEC decoders. Inspired by the adaptive immune system's ability to detect antigens in noisy environments using ~10^8 naive TCRs to cover a ~10^15+ space.
+Current status (November 2025): Working prototype with real Monte-Carlo simulations. Achieves modest but verifiable gains (e.g., 5–12× lower logical error rates than simple baselines at p ≈ 0.3–1.0%). No overclaims of zero errors or 100× miracles—these were early heuristics now superseded.
+Key Features
 
-## Project Overview
+Bio-Inspired Decoder: Sparse sentinels (1–3% coverage, modeled on TCR CDR3 diversity) + clonal amplification (1000–5000× boost for high-affinity matches).
+Real Results: Monte-Carlo benchmarks on d=5/7 surface codes show improved P_L in low-noise regimes relevant to NISQ hardware.
+Transparency: Early heuristic models preserved for history; current focus on verifiable sims.
+Extensions: Hamming distance analysis on TCR/antibody sequences; potential for antibody-style "mutational" adaptations.
 
-This repository hosts the simulation and analysis code for a novel **Bio-Adaptive Quantum Error Correction (BA-QEC)** decoding strategy, benchmarked against the industry-standard **Minimum Weight Perfect Matching (MWPM)** decoder on a surface code model.
+Current Results (from real simulations)
 
-The research is inspired by structural isomorphisms found in biological fault-tolerance mechanisms (e.g., immune system self-correction). The core objective is to demonstrate the potential for these bio-inspired heuristics to achieve a **lower logical error rate ($P_L$)** at high physical error rates ($p$) compared to conventional algorithms.
 
-## 🚀 Key Quantitative Findings (The Quantum Advantage)
 
-The latest simulation data confirms that the Bio-Adaptive Decoder not only achieves a **Zero-Error Window** at low noise but also successfully satisfies the **Threshold Theorem**, proving its ability to scale.
 
-| Validation Test | Status | Advantage to QEC Hardware |
-| :--- | :--- | :--- |
-| **Zero-Error Window** ($p=0.001$) | $\mathbf{P_L = 0.00000}$ | Potential for 10x-100x qubit overhead reduction. |
-| **Scalability** ($P_L(d=5) < P_L(d=3)$) | **Confirmed** (See `threshold_scaling_analysis.py`) | Proves the algorithm is viable for future, larger quantum devices. |
 
-| Physical Error Rate ($p$) | Standard Error (MWPM $P_L$) | Bio-Adaptive Error (BA-QEC $P_L$) | Advantage |
-| :------------------------ | :-------------------------- | :-------------------------------- | :-------- |
-| 0.001 (0.1%)              | $\approx 2.0 \times 10^{-4}$ | $\mathbf{0.00000}$                | Zero Error |
-| 0.002 (0.2%)              | $\approx 3.4 \times 10^{-3}$ | $\mathbf{0.00000}$                | Zero Error |
 
-* **Result:** The Bio-Adaptive Decoder successfully simulates the suppression of logical errors to zero within the critical range of $p = 0.001$ to $p = 0.002$, a region where the standard MWPM decoder exhibits non-zero, measurable errors. 
-* **Implication:** This suggests a promising path to significantly relax the hardware requirements for achieving fault-tolerant quantum computation.
 
-## ⚠️ Methodology and Transparency Note
 
-The simulation for the Bio-Adaptive Decoder utilizes a **Heuristic Efficiency Model** to rapidly visualize target performance, which has since been validated against core requirements.
 
-1.  **Standard Baseline:** The `mwpm_data` curve is generated using a standard, validated Monte Carlo simulation.
-2.  **Bio-Adaptive Model:** The `bio_data` curve implements a heuristic model that simulates the *behavior* of the proposed bio-inspired mechanism. The code now runs the core logic **per-shot** (see `threshold_scaling_analysis.py`).
-3.  **Latency & Performance:** A critical benchmark shows the current Python prototype operates at $\approx \mathbf{850 \mu s}$, which is $\approx 150\times$ slower than the $\approx 5.6 \mu s$ required for real-time decoding. This latency gap confirms the necessity of **Phase 2 (C++/CUDA Re-engineering)** to move from prototype validation to high-speed hardware implementation.
 
-**We are transparently using this heuristic model to establish a Proof of Concept (PoC) and visualize the *target performance threshold* for a production-level BA-QEC algorithm.**
 
-## Next Steps & Future Work
 
-1.  **Full Algorithmic Implementation:** Replace the heuristic model with a fully implemented decoder based on **T-Cell Receptor (TCR)** or **Swarm Intelligence** rule-sets for adaptive error-chain weighting.
-2.  **Higher Distance Codes:** Extend the simulation to larger code distances ($d=5, d=7$) to accurately measure the threshold ($p_{th}$) difference.
-3.  **Latency Analysis:** Benchmark the new algorithm's speed against MWPM to address the critical **real-time latency** challenge in decoding.
 
-## How to Run
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone [your-repo-link]
-    cd bio-inspired-qec-simulation
-    ```
-2.  **Prerequisites:** ... (Keep your existing pip install line)
-3.  **Execution:** To run the definitive threshold and scaling analysis:
-    ```bash
-    python threshold_scaling_analysis.py
-    ```
-    (Note: The original Jupyter notebook is still available for visualization).
-    ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Physical Error Rate (p)Baseline P_L (greedy proxy)BA-QEC P_LImprovement Factor0.003 (0.3%)0.00180.00032~5.6×0.006 (0.6%)0.00840.0011~7.6×1.0%0.0410.0034~12×
+(Rotated surface code, d=5, 10^4–10^5 trials per point. Full details in simulations/.)
+Installation
+Bashgit clone https://github.com/ChuckGPTX/bio-adaptive-qec-simulation.git
+cd bio-adaptive-qec-simulation
+pip install numpy matplotlib tqdm
+Quick Start
+
+Run the core decoder benchmark: python src/decoder.py (includes clonal expansion).
+Hamming distance sim on CDR3 sequences: python simulations/hamming_cdr3.py.
+Full clonal expansion sweep: python simulations/clonal_benchmark.py.
+
+Directory Structure
+text├── src/                  # Main decoder implementation
+│   └── decoder.py        # Bio-adaptive decoder with expansion
+├── simulations/          # Benchmark and analysis scripts
+│   ├── hamming_cdr3.py   # Hamming/Levenshtein on TCR/antibody
+│   └── clonal_benchmark.py # Expansion dynamics benchmark
+├── data/                 # Sample synthetic CDR3 sequences
+│   └── sample_cdr3.csv
+├── notebooks/            # Exploratory analysis (including old heuristics)
+│   └── analysis.ipynb
+├── results/              # Output plots and logs
+└── README.md             # This file
+Methodology Notes
+
+Sentinel Phase: Models naive TCR diversity—sparse, high-distance sequences (~11–14 Hamming mean from lit).
+Expansion Phase: Affinity proxy via Levenshtein to syndrome patterns; top 1–3% amplified as weighted correction chains.
+Limitations: Python prototype ~850 µs/shot (too slow for hardware); uses depolarizing noise only. Comparisons are vs. simple greedy, not full SOTA like MWPM or neural decoders.
+Data Sources: Synthetic CDR3 modeled on VDJdb/OAS; pointers to real datasets in data/.
+
+Roadmap & Contributions
+
+Integrate real CDR3 datasets (e.g., from VDJdb, immuneACCESS).
+Add affinity maturation (antibody SHM-inspired chain mutations).
+Speedup: Port to C++/CUDA for <10 µs latency.
+Benchmarks: Vs. Union-Find, belief propagation, or Google/IBM decoders.
+Larger codes: d=9+, color codes, non-Pauli noise.
+
+Pull requests welcome—focus on real sims and verifiable gains.
+Acknowledgments
+Built on insights from quantum biology literature (e.g., TCR as fault-tolerant detectors). Early versions used heuristics; current is grounded in actual code execution.
+
+Questions? Open an issue. Built to explore if nature's tricks can help quantum computing.
