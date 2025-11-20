@@ -1,7 +1,9 @@
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ChuckGPTX/bio-adaptive-qec-simulation/blob/main/notebooks/real_bio_adaptive_qec_v1.ipynb)
+
 # Bio-Adaptive Quantum Error Correction (BA-QEC) Simulator  
 ### Immune-Inspired Decoding for Surface Codes
 
-This repository explores whether biological fault-tolerance mechanisms—specifically T-cell receptor (TCR) diversity, affinity scoring, and clonal expansion—can improve practical quantum error correction.
+This repository explores whether biological fault-tolerance mechanisms—specifically T-cell receptor (TCR) diversity, affinity scoring, and clonal expansion—can improve practical quantum error c[...]  
 
 The immune system solves a problem nearly identical to QEC:
 
@@ -126,7 +128,7 @@ Plus manuscript figures:
 
 Acharya et al., *Quantum error correction below the surface-code threshold*, Nature (2025).  
 Rad et al., *Scaling a modular photonic quantum computer*, Nature (2025).  
-Larsen et al., *Integrated photonic source of GKP qubits*, Nature (2025).  
+Larsen et al., *Integrated photonic source of GKP qubits*, Nature (2025). 
 
 ---
 
@@ -142,4 +144,3 @@ Contributions welcome:
 - Benchmarking on noisy hardware  
 
 Open an issue or PR to collaborate.
-
